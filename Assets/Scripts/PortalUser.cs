@@ -3,14 +3,13 @@ using UnityEngine;
 
 public class PortalUser : MonoBehaviour
 {
+    private static readonly int SliceNormal = Shader.PropertyToID("sliceNormal");
+    private static readonly int SliceOffsetDst = Shader.PropertyToID("sliceOffsetDst");
     public GameObject modelObject;
     public GameObject GraphicsClone { get; set; }
     public Vector3 PreviousOffsetFromPortal { get; set; }
     public Material[] OriginalMaterials { get; set; }
     public Material[] CloneMaterials { get; set; }
-    
-    private static readonly int SliceNormal = Shader.PropertyToID("sliceNormal");
-    private static readonly int SliceOffsetDst = Shader.PropertyToID("sliceOffsetDst");
 
     public virtual void Teleport(Transform fromPortal, Transform toPortal, Vector3 pos, Quaternion rot)
     {
@@ -46,13 +45,9 @@ public class PortalUser : MonoBehaviour
     {
         for (var i = 0; i < OriginalMaterials.Length; i++)
             if (clone)
-            {
                 CloneMaterials[i].SetFloat(SliceOffsetDst, dst);
-            }
             else
-            {
                 OriginalMaterials[i].SetFloat(SliceOffsetDst, dst);
-            }
     }
 
     private static Material[] GetMaterials(GameObject g)

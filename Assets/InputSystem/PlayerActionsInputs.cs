@@ -15,30 +15,10 @@ namespace InputSystem
         [Header("Mouse Cursor Settings")] public bool cursorLocked = true;
         public bool cursorInputForLook = true;
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-        public void OnMove(InputValue value)
+        private void OnApplicationFocus(bool hasFocus)
         {
-            MoveInput(value.Get<Vector2>());
+            SetCursorState(cursorLocked);
         }
-
-        public void OnLook(InputValue value)
-        {
-            if (cursorInputForLook)
-            {
-                LookInput(value.Get<Vector2>());
-            }
-        }
-
-        public void OnJump(InputValue value)
-        {
-            JumpInput(value.isPressed);
-        }
-
-        public void OnSprint(InputValue value)
-        {
-            SprintInput(value.isPressed);
-        }
-#endif
 
 
         public void MoveInput(Vector2 newMoveDirection)
@@ -61,14 +41,31 @@ namespace InputSystem
             sprint = newSprintState;
         }
 
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            SetCursorState(cursorLocked);
-        }
-
         private static void SetCursorState(bool newState)
         {
             Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
         }
+
+#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
+        public void OnMove(InputValue value)
+        {
+            MoveInput(value.Get<Vector2>());
+        }
+
+        public void OnLook(InputValue value)
+        {
+            if (cursorInputForLook) LookInput(value.Get<Vector2>());
+        }
+
+        public void OnJump(InputValue value)
+        {
+            JumpInput(value.isPressed);
+        }
+
+        public void OnSprint(InputValue value)
+        {
+            SprintInput(value.isPressed);
+        }
+#endif
     }
 }

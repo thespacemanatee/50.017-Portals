@@ -2,32 +2,32 @@ using UnityEngine;
 
 public class PlayerController : PortalUser
 {
+    private const float RotationSmoothTime = 0.1f;
+    private const float MoveSmoothTime = 0.1f;
+    private const float MouseSensitivity = 10f;
     public float walkSpeed = 5;
     public float runSpeed = 10;
     public float jumpForce = 10;
     public float gravity = 20;
 
+    private readonly Vector2 _pitchMinMax = new(-40, 85);
+
     private Camera _cam;
     private CharacterController _controller;
     private Vector3 _currentRotation;
-    private Vector3 _rotationSmoothVelocity;
-    private Vector3 _velocity;
-    private Vector3 _smoothV;
-    private float _yaw;
-    private float _pitch;
-    private float _smoothYaw;
-    private float _smoothPitch;
-    private float _yawSmoothV;
-    private float _pitchSmoothV;
-    private bool _jumping;
-    private float _verticalVelocity;
-    private float _lastGroundedTime;
     private bool _disabled;
-
-    private readonly Vector2 _pitchMinMax = new(-40, 85);
-    private const float RotationSmoothTime = 0.1f;
-    private const float MoveSmoothTime = 0.1f;
-    private const float MouseSensitivity = 10f;
+    private bool _jumping;
+    private float _lastGroundedTime;
+    private float _pitch;
+    private float _pitchSmoothV;
+    private Vector3 _rotationSmoothVelocity;
+    private float _smoothPitch;
+    private Vector3 _smoothV;
+    private float _smoothYaw;
+    private Vector3 _velocity;
+    private float _verticalVelocity;
+    private float _yaw;
+    private float _yawSmoothV;
 
     private void Start()
     {
