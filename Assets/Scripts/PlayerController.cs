@@ -1,26 +1,26 @@
 using UnityEngine;
 
-public class PlayerController : PortalTraveller
+public class PlayerController : PortalUser
 {
     public float walkSpeed = 5;
     public float runSpeed = 10;
     public float jumpForce = 10;
     public float gravity = 20;
-    public float yaw;
-    public float pitch;
 
     private Camera _cam;
     private CharacterController _controller;
-    private bool _jumping;
-    private float _verticalVelocity;
-    private float _smoothPitch;
-    private float _smoothYaw;
     private Vector3 _currentRotation;
     private Vector3 _rotationSmoothVelocity;
     private Vector3 _velocity;
     private Vector3 _smoothV;
-    private float _pitchSmoothV;
+    private float _yaw;
+    private float _pitch;
+    private float _smoothYaw;
+    private float _smoothPitch;
     private float _yawSmoothV;
+    private float _pitchSmoothV;
+    private bool _jumping;
+    private float _verticalVelocity;
     private float _lastGroundedTime;
     private bool _disabled;
 
@@ -33,23 +33,21 @@ public class PlayerController : PortalTraveller
     {
         _cam = Camera.main;
         _controller = GetComponent<CharacterController>();
-        yaw = transform.eulerAngles.y;
-        if (_cam != null) pitch = _cam.transform.localEulerAngles.x;
-        _smoothYaw = yaw;
-        _smoothPitch = pitch;
+        _yaw = transform.eulerAngles.y;
+        if (_cam != null) _pitch = _cam.transform.localEulerAngles.x;
+        _smoothYaw = _yaw;
+        _smoothPitch = _pitch;
     }
 
     private void Update()
     {
         var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
         var inputDir = new Vector3(input.x, 0, input.y).normalized;
         var worldInputDir = transform.TransformDirection(inputDir);
 
         var currentSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
         var targetVelocity = worldInputDir * currentSpeed;
         _velocity = Vector3.SmoothDamp(_velocity, targetVelocity, ref _smoothV, MoveSmoothTime);
-
         _verticalVelocity -= gravity * Time.deltaTime;
         _velocity = new Vector3(_velocity.x, _verticalVelocity, _velocity.z);
 
@@ -71,17 +69,13 @@ public class PlayerController : PortalTraveller
             }
         }
 
-        var mX = Input.GetAxisRaw("Mouse X");
-        var mY = Input.GetAxisRaw("Mouse Y");
-
-        yaw += mX * MouseSensitivity;
-        pitch -= mY * MouseSensitivity;
-        pitch = Mathf.Clamp(pitch, _pitchMinMax.x, _pitchMinMax.y);
-        _smoothPitch = Mathf.SmoothDampAngle(_smoothPitch, pitch, ref _pitchSmoothV, RotationSmoothTime);
-        _smoothYaw = Mathf.SmoothDampAngle(_smoothYaw, yaw, ref _yawSmoothV, RotationSmoothTime);
-
-        transform.eulerAngles = Vector3.up * _smoothYaw;
+        _yaw += Input.GetAxisRaw("Mouse X") * MouseSensitivity;
+        _pitch -= Input.GetAxisRaw("Mouse Y") * MouseSensitivity;
+        _pitch = Mathf.Clamp(_pitch, _pitchMinMax.x, _pitchMinMax.y);
+        _smoothPitch = Mathf.SmoothDampAngle(_smoothPitch, _pitch, ref _pitchSmoothV, RotationSmoothTime);
+        _smoothYaw = Mathf.SmoothDampAngle(_smoothYaw, _yaw, ref _yawSmoothV, RotationSmoothTime);
         _cam.transform.localEulerAngles = Vector3.right * _smoothPitch;
+        transform.eulerAngles = Vector3.up * _smoothYaw;
     }
 
     public override void Teleport(Transform fromPortal, Transform toPortal, Vector3 pos, Quaternion rot)
@@ -89,10 +83,10 @@ public class PlayerController : PortalTraveller
         transform.position = pos;
         var eulerRot = rot.eulerAngles;
         var delta = Mathf.DeltaAngle(_smoothYaw, eulerRot.y);
-        yaw += delta;
+        _yaw += delta;
         _smoothYaw += delta;
-        transform.eulerAngles = Vector3.up * _smoothYaw;
         _velocity = toPortal.TransformVector(fromPortal.InverseTransformVector(_velocity));
+        transform.eulerAngles = Vector3.up * _smoothYaw;
         Physics.SyncTransforms();
     }
 }

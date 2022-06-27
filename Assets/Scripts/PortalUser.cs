@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class PortalTraveller : MonoBehaviour
+public class PortalUser : MonoBehaviour
 {
     public GameObject modelObject;
     public GameObject GraphicsClone { get; set; }
