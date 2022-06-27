@@ -44,7 +44,6 @@ public class PlayerController : PortalUser
         var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         var inputDir = new Vector3(input.x, 0, input.y).normalized;
         var worldInputDir = transform.TransformDirection(inputDir);
-
         var currentSpeed = Input.GetKey(KeyCode.LeftShift) ? runSpeed : walkSpeed;
         var targetVelocity = worldInputDir * currentSpeed;
         _velocity = Vector3.SmoothDamp(_velocity, targetVelocity, ref _smoothV, MoveSmoothTime);
