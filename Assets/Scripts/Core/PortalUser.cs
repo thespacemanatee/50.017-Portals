@@ -7,7 +7,8 @@ namespace Core
     {
         private static readonly int SliceNormal = Shader.PropertyToID("sliceNormal");
         private static readonly int SliceOffsetDst = Shader.PropertyToID("sliceOffsetDst");
-        public GameObject originalGameObject;
+
+        public GameObject graphicsObject;
         public GameObject GraphicsClone { get; set; }
         public Vector3 PreviousOffsetFromPortal { get; set; }
         public Material[] OriginalMaterials { get; set; }
@@ -24,9 +25,9 @@ namespace Core
         {
             if (GraphicsClone == null)
             {
-                GraphicsClone = Instantiate(originalGameObject, originalGameObject.transform.parent, true);
-                GraphicsClone.transform.localScale = originalGameObject.transform.localScale;
-                OriginalMaterials = GetMaterials(originalGameObject);
+                GraphicsClone = Instantiate(graphicsObject, graphicsObject.transform.parent, true);
+                GraphicsClone.transform.localScale = graphicsObject.transform.localScale;
+                OriginalMaterials = GetMaterials(graphicsObject);
                 CloneMaterials = GetMaterials(GraphicsClone);
             }
             else
