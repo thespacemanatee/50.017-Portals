@@ -47,7 +47,7 @@ namespace Core
         private void OnTriggerEnter(Collider other)
         {
             var user = other.GetComponent<PortalUser>();
-            if (user) OnUserEnterPortal(user);
+            if (user) HandleUserEnterPortal(user);
         }
 
         private void OnTriggerExit(Collider other)
@@ -61,6 +61,17 @@ namespace Core
         private void OnValidate()
         {
             if (linkedPortal != null) linkedPortal.linkedPortal = this;
+        }
+
+        private int SideOfPortal(Vector3 pos)
+        {
+            var currTransform = transform;
+            return Math.Sign(Vector3.Dot(pos - currTransform.position, currTransform.forward));
+        }
+
+        private bool SameSideOfPortal(Vector3 posA, Vector3 posB)
+        {
+            return SideOfPortal(posA) == SideOfPortal(posB);
         }
 
         private void HandleUsers()
@@ -85,14 +96,14 @@ namespace Core
                     user.Teleport(transform, linkedPortal.transform, m.GetColumn(3), m.rotation);
                     user.GraphicsClone.transform.SetPositionAndRotation(positionOld, rotOld);
                     // Can't rely on OnTriggerEnter/Exit to be called next frame since it depends on when FixedUpdate runs
-                    linkedPortal.OnUserEnterPortal(user);
+                    linkedPortal.HandleUserEnterPortal(user);
                     _trackedUsers.RemoveAt(i);
                     i--;
                 }
                 else
                 {
                     user.GraphicsClone.transform.SetPositionAndRotation(m.GetColumn(3), m.rotation);
-                    //UpdateSliceParams (user);
+                    //UpdateSliceParams(user);
                     user.PreviousOffsetFromPortal = offsetFromPortal;
                 }
             }
@@ -180,7 +191,6 @@ namespace Core
                 user.SetSliceOffsetDst(camSameSideAsClone ? screenThickness : -screenThickness, true);
             }
 
-            var offsetFromPortalToCam = PortalCamPos - transform.position;
             foreach (var linkedUser in linkedPortal._trackedUsers)
             {
                 var userPos = linkedUser.graphicsObject.transform.position;
@@ -225,14 +235,15 @@ namespace Core
             var halfWidth = halfHeight * _playerCam.aspect;
             var dstToNearClipPlaneCorner = new Vector3(halfWidth, halfHeight, _playerCam.nearClipPlane).magnitude;
 
-            var screenTransform = screen.transform;
-            var currTransform = transform;
-            var isCamFacingSameDirAsPortal = Vector3.Dot(currTransform.forward, currTransform.position - viewPoint) > 0;
-            var localScale = screenTransform.localScale;
-            localScale = new Vector3(localScale.x, localScale.y, dstToNearClipPlaneCorner);
-            screenTransform.localScale = localScale;
-            screenTransform.localPosition = Vector3.forward * dstToNearClipPlaneCorner *
-                                            (isCamFacingSameDirAsPortal ? 0.5f : -0.5f);
+            // TODO: Fix this hack to get the screen to not clip with the camera near plane
+            // var screenTransform = screen.transform;
+            // var currTransform = transform;
+            // var isCamFacingSameDirAsPortal = Vector3.Dot(currTransform.forward, currTransform.position - viewPoint) > 0;
+            // var localScale = screenTransform.localScale;
+            // localScale = new Vector3(localScale.x, localScale.y, dstToNearClipPlaneCorner);
+            // screenTransform.localScale = localScale;
+            // screenTransform.localPosition = Vector3.forward * dstToNearClipPlaneCorner *
+            //                                 (isCamFacingSameDirAsPortal ? 0.5f : -0.5f);
             return dstToNearClipPlaneCorner;
         }
 
@@ -305,23 +316,12 @@ namespace Core
             }
         }
 
-        private void OnUserEnterPortal(PortalUser user)
+        private void HandleUserEnterPortal(PortalUser user)
         {
             if (_trackedUsers.Contains(user)) return;
             user.EnterPortalThreshold();
             user.PreviousOffsetFromPortal = user.transform.position - transform.position;
             _trackedUsers.Add(user);
-        }
-
-        private int SideOfPortal(Vector3 pos)
-        {
-            var currTransform = transform;
-            return Math.Sign(Vector3.Dot(pos - currTransform.position, currTransform.forward));
-        }
-
-        private bool SameSideOfPortal(Vector3 posA, Vector3 posB)
-        {
-            return SideOfPortal(posA) == SideOfPortal(posB);
         }
     }
 }
