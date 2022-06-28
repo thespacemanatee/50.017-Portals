@@ -11,9 +11,10 @@ namespace ThirdPersonController.Scripts
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : PortalUser
     {
-        private const float _threshold = 0.01f;
+        private const float Threshold = 0.01f;
+        private const float TerminalVelocity = 53.0f;
 
         [Header("Player")] [Tooltip("Move speed of the character in m/s")]
         public float MoveSpeed = 2.0f;
@@ -103,7 +104,6 @@ namespace ThirdPersonController.Scripts
         // player
         private float _speed;
         private float _targetRotation;
-        private readonly float _terminalVelocity = 53.0f;
         private float _verticalVelocity;
 
         private bool IsCurrentDeviceMouse
@@ -197,7 +197,7 @@ namespace ThirdPersonController.Scripts
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (_input.look.sqrMagnitude >= Threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 var deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
@@ -334,7 +334,7 @@ namespace ThirdPersonController.Scripts
             }
 
             // apply gravity over time if under terminal (multiply by delta time twice to linearly speed up over time)
-            if (_verticalVelocity < _terminalVelocity) _verticalVelocity += Gravity * Time.deltaTime;
+            if (_verticalVelocity < TerminalVelocity) _verticalVelocity += Gravity * Time.deltaTime;
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
