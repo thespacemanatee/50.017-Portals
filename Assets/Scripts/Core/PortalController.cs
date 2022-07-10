@@ -81,13 +81,14 @@ namespace Core
                 var user = _trackedUsers[i];
                 var userTransform = user.transform;
                 var currTransform = transform;
+                Debug.Log(userTransform.position + " " + currTransform.position);
                 var m = linkedPortal.transform.localToWorldMatrix * currTransform.worldToLocalMatrix *
                         userTransform.localToWorldMatrix;
 
                 var offsetFromPortal = userTransform.position - currTransform.position;
                 var portalSide = Math.Sign(Vector3.Dot(offsetFromPortal, currTransform.forward));
                 var portalSideOld =
-                    Math.Sign(Vector3.Dot(user.PreviousOffsetFromPortal, transform.forward));
+                    Math.Sign(Vector3.Dot(user.PreviousOffsetFromPortal, currTransform.forward));
                 // Teleport the user if it has crossed from one side of the portal to the other
                 if (portalSide != portalSideOld)
                 {
@@ -251,10 +252,10 @@ namespace Core
         {
             // Calculate slice normal
             var currTransform = transform;
-            var position = user.transform.position;
+            var userPosition = user.transform.position;
             var linkedPortalTransform = linkedPortal.transform;
 
-            var side = SideOfPortal(position);
+            var side = SideOfPortal(userPosition);
             var sliceNormal = currTransform.forward * -side;
             var cloneSliceNormal = linkedPortalTransform.forward * side;
 
@@ -268,7 +269,7 @@ namespace Core
             var screenThickness = screen.transform.localScale.z;
 
             var playerSameSideAsUser =
-                SameSideOfPortal(_playerCam.transform.position, position);
+                SameSideOfPortal(_playerCam.transform.position, userPosition);
             if (!playerSameSideAsUser) sliceOffsetDst = -screenThickness;
 
             var playerSameSideAsCloneAppearing = side != linkedPortal.SideOfPortal(_playerCam.transform.position);
