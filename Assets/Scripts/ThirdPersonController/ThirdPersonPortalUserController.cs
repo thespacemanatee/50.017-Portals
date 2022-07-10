@@ -12,7 +12,7 @@ namespace ThirdPersonController
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : PortalUser
+    public class ThirdPersonPortalUserController : PortalUser
     {
         private const float Threshold = 0.01f;
         private const float TerminalVelocity = 53.0f;
