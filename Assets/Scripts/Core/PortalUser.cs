@@ -48,9 +48,13 @@ namespace Core
         {
             for (var i = 0; i < OriginalMaterials.Length; i++)
                 if (clone)
+                {
                     CloneMaterials[i].SetFloat(SliceOffsetDst, dst);
+                }
                 else
+                {
                     OriginalMaterials[i].SetFloat(SliceOffsetDst, dst);
+                }
         }
 
         private static Material[] GetMaterials(GameObject g)

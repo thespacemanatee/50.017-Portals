@@ -81,20 +81,18 @@ namespace Core
                 var user = _trackedUsers[i];
                 var userTransform = user.transform;
                 var currTransform = transform;
-                Debug.Log(userTransform.position + " " + currTransform.position);
                 var m = linkedPortal.transform.localToWorldMatrix * currTransform.worldToLocalMatrix *
                         userTransform.localToWorldMatrix;
 
                 var offsetFromPortal = userTransform.position - currTransform.position;
                 var portalSide = Math.Sign(Vector3.Dot(offsetFromPortal, currTransform.forward));
-                var portalSideOld =
-                    Math.Sign(Vector3.Dot(user.PreviousOffsetFromPortal, currTransform.forward));
+                var portalSideOld = Math.Sign(Vector3.Dot(user.PreviousOffsetFromPortal, currTransform.forward));
                 // Teleport the user if it has crossed from one side of the portal to the other
                 if (portalSide != portalSideOld)
                 {
                     var positionOld = userTransform.position;
                     var rotOld = userTransform.rotation;
-                    user.Teleport(transform, linkedPortal.transform, m.GetColumn(3), m.rotation);
+                    user.Teleport(currTransform, linkedPortal.transform, m.GetColumn(3), m.rotation);
                     user.GraphicsClone.transform.SetPositionAndRotation(positionOld, rotOld);
                     // Can't rely on OnTriggerEnter/Exit to be called next frame since it depends on when FixedUpdate runs
                     linkedPortal.HandleUserEnterPortal(user);
@@ -156,7 +154,8 @@ namespace Core
             for (var i = startIndex; i < recursionLimit; i++)
             {
                 _portalCam.transform.SetPositionAndRotation(renderPositions[i], renderRotations[i]);
-                SetNearClipPlane();
+                // TODO: Figure out why this doesn't work properly
+                // SetNearClipPlane();
                 HandleClipping();
                 _portalCam.Render();
 
@@ -268,8 +267,7 @@ namespace Core
             float cloneSliceOffsetDst = 0;
             var screenThickness = screen.transform.localScale.z;
 
-            var playerSameSideAsUser =
-                SameSideOfPortal(_playerCam.transform.position, userPosition);
+            var playerSameSideAsUser = SameSideOfPortal(_playerCam.transform.position, userPosition);
             if (!playerSameSideAsUser) sliceOffsetDst = -screenThickness;
 
             var playerSameSideAsCloneAppearing = side != linkedPortal.SideOfPortal(_playerCam.transform.position);
