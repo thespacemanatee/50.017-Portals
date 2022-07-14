@@ -531,7 +531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1039508210828441068, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.74
+      value: -4.61
       objectReference: {fileID: 0}
     - target: {fileID: 1039508210828441068, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -539,7 +539,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1039508210828441068, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.3
+      value: -3.49
       objectReference: {fileID: 0}
     - target: {fileID: 1039508210828441068, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -575,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 9.81
+      value: 11.32
       objectReference: {fileID: 0}
     - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -823,6 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphicsObject: {fileID: 770739903}
+  maxSpeed: 1
 --- !u!1 &1133819395
 GameObject:
   m_ObjectHideFlags: 0
