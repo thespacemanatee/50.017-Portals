@@ -86,6 +86,8 @@ namespace Core
 
                 var offsetFromPortal = userTransform.position - currTransform.position;
                 var portalSide = Math.Sign(Vector3.Dot(offsetFromPortal, currTransform.forward));
+                Debug.Log("currentPosition: " + currTransform.position + "; forward: " + currTransform.forward +
+                          "; dot: " + Vector3.Dot(offsetFromPortal, currTransform.forward));
                 var portalSideOld = Math.Sign(Vector3.Dot(user.PreviousOffsetFromPortal, currTransform.forward));
                 // Teleport the user if it has crossed from one side of the portal to the other
                 if (portalSide != portalSideOld)
