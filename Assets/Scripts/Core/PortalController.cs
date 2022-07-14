@@ -86,8 +86,6 @@ namespace Core
 
                 var offsetFromPortal = userTransform.position - currTransform.position;
                 var portalSide = Math.Sign(Vector3.Dot(offsetFromPortal, currTransform.forward));
-                Debug.Log("currentPosition: " + currTransform.position + "; forward: " + currTransform.forward +
-                          "; dot: " + Vector3.Dot(offsetFromPortal, currTransform.forward));
                 var portalSideOld = Math.Sign(Vector3.Dot(user.PreviousOffsetFromPortal, currTransform.forward));
                 // Teleport the user if it has crossed from one side of the portal to the other
                 if (portalSide != portalSideOld)
@@ -237,15 +235,14 @@ namespace Core
             var halfWidth = halfHeight * _playerCam.aspect;
             var dstToNearClipPlaneCorner = new Vector3(halfWidth, halfHeight, _playerCam.nearClipPlane).magnitude;
 
-            // TODO: Fix this hack to get the screen to not clip with the camera near plane
-            // var screenTransform = screen.transform;
-            // var currTransform = transform;
-            // var isCamFacingSameDirAsPortal = Vector3.Dot(currTransform.forward, currTransform.position - viewPoint) > 0;
-            // var localScale = screenTransform.localScale;
-            // localScale = new Vector3(localScale.x, localScale.y, dstToNearClipPlaneCorner);
-            // screenTransform.localScale = localScale;
-            // screenTransform.localPosition = Vector3.forward * dstToNearClipPlaneCorner *
-            //                                 (isCamFacingSameDirAsPortal ? 0.5f : -0.5f);
+            var screenTransform = screen.transform;
+            var currTransform = transform;
+            var isCamFacingSameDirAsPortal = Vector3.Dot(currTransform.forward, currTransform.position - viewPoint) > 0;
+            var localScale = screenTransform.localScale;
+            localScale = new Vector3(localScale.x, localScale.y, dstToNearClipPlaneCorner);
+            screenTransform.localScale = localScale;
+            screenTransform.localPosition = Vector3.forward * dstToNearClipPlaneCorner *
+                                            (isCamFacingSameDirAsPortal ? 0.5f : -0.5f);
             return dstToNearClipPlaneCorner;
         }
 
