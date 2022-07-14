@@ -13,7 +13,6 @@ namespace Users
 
         void Start()
         {
-            Debug.Log("Press C to stop/start car");
             targetSpeed = maxSpeed;
         }
 
@@ -27,7 +26,6 @@ namespace Users
 
             if (isMoving)
             {
-                float moveDst = Time.deltaTime * speed;
                 transform.position += transform.forward * Time.deltaTime * speed;
 
                 if (Input.GetKeyDown(KeyCode.C))
