@@ -132,9 +132,11 @@ namespace Core
             for (var i = 0; i < recursionLimit; i++)
             {
                 if (i > 0)
+                {
                     // Don't recurse if linked portal is not visible through this portal
                     if (!CameraUtil.BoundsOverlap(_screenMeshFilter, linkedPortal._screenMeshFilter, _portalCam))
                         break;
+                }
 
                 localToWorldMatrix = transform.localToWorldMatrix * linkedPortal.transform.worldToLocalMatrix *
                                      localToWorldMatrix;
