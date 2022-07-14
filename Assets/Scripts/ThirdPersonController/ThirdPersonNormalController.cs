@@ -133,6 +133,11 @@ namespace ThirdPersonController
             PlayerInput.all[1].SwitchCurrentControlScheme("KeyboardMouse", Keyboard.current);
         }
 
+        private void OnDisable()
+        {
+            PlayerInput.all[1].DeactivateInput();
+        }
+
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
@@ -179,11 +184,6 @@ namespace ThirdPersonController
             Gizmos.DrawSphere(
                 new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
                 GroundedRadius);
-        }
-
-        private void OnDisable()
-        {
-            PlayerInput.all[1].DeactivateInput();
         }
 
         private void AssignAnimationIDs()
