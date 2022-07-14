@@ -378,6 +378,11 @@ MonoBehaviour:
   onGameStart:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &203874265 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3837663348675104489, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+  m_PrefabInstance: {fileID: 1158451638}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &421934321
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -570,15 +575,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5.98
+      value: 9.81
       objectReference: {fileID: 0}
     - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.32
+      value: 1.3199953
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.3399997
       objectReference: {fileID: 0}
     - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.57
+      value: 2.9499936
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.831431
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.55562806
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 67.508
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1055,7 +1076,7 @@ PrefabInstance:
     - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: graphicsObject
       value: 
-      objectReference: {fileID: 4416926081852918481, guid: 0da859ac2e17d42e2a4d08b67d82a9a1, type: 3}
+      objectReference: {fileID: 203874265}
     - target: {fileID: 4416926081852918491, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_Enabled
       value: 1
