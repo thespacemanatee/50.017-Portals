@@ -9,6 +9,7 @@ namespace Core
         private void Awake()
         {
             _portals = FindObjectsOfType<PortalController>();
+            Application.targetFrameRate = 45;
         }
 
         private void OnPreCull()

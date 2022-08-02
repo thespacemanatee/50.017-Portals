@@ -157,7 +157,7 @@ namespace Core
             {
                 _portalCam.transform.SetPositionAndRotation(renderPositions[i], renderRotations[i]);
                 // TODO: Figure out why this doesn't work properly
-                // SetNearClipPlane();
+                SetNearClipPlane();
                 HandleClipping();
                 _portalCam.Render();
 

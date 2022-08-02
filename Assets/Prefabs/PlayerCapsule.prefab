@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01720a4f23744938b6adc30ef15e8188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graphicsObject: {fileID: 8616685848737228372}
+  graphicsObject: {fileID: 5393215578589016642}
   MoveSpeed: 4
   SprintSpeed: 6
   RotationSpeed: 1

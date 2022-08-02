@@ -501,6 +501,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestCube
       objectReference: {fileID: 0}
+    - target: {fileID: 4050507297172031487, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6272368576625322236, guid: 0f60117d8e1134143b7704b812f1638c, type: 3}
       propertyPath: m_LocalScale.z
       value: 11.32
@@ -1174,6 +1178,10 @@ PrefabInstance:
       propertyPath: linkedPortal
       value: 
       objectReference: {fileID: 1214209133}
+    - target: {fileID: 622142133809433814, guid: 62b82f66f58704f13970fd2e472bc06c, type: 3}
+      propertyPath: recursionLimit
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 622142133809433808, guid: 62b82f66f58704f13970fd2e472bc06c, type: 3}
@@ -1559,6 +1567,10 @@ PrefabInstance:
       propertyPath: linkedPortal
       value: 
       objectReference: {fileID: 1719576294}
+    - target: {fileID: 622142133809433814, guid: 62b82f66f58704f13970fd2e472bc06c, type: 3}
+      propertyPath: recursionLimit
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 622142133809433808, guid: 62b82f66f58704f13970fd2e472bc06c, type: 3}
